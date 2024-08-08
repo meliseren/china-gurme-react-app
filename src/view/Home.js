@@ -9,6 +9,7 @@ const Home = () => {
             {image && <img src={image} alt="Home" style={{ maxWidth: '200px', marginBottom: '10px' }} />}
             <p>{content}</p>
         </div>
+
     );
 };
 

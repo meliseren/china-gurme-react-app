@@ -14,7 +14,12 @@
 }
 
 header {
+
     nav {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+
         ul {
             display: flex;
             justify-content: center;
@@ -27,6 +32,49 @@ header {
                     text-decoration: none;
                 }
             }
+        }
+    }
+}
+
+// About
+.about {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 0rem 5rem;
+
+    .about-image {
+        img {
+            width: 30rem;
+            border-radius: .5rem;
+
+        }
+    }
+}
+
+.product {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+
+    .product-box {
+        border: 1px solid #c3c3c3;
+        padding: 1rem;
+        border-radius: .5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 2rem 0.5rem;
+        min-width: 10rem;
+        min-height: 10rem;
+        width: 15rem;
+        height: 15rem;
+
+        img {
+            width: 10rem;
         }
     }
 }

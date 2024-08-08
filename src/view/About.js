@@ -5,8 +5,10 @@ const About = () => {
     const image = localStorage.getItem('aboutImage');
 
     return (
-        <div>
-            {image && <img src={image} alt="About" style={{ maxWidth: '200px', marginBottom: '10px' }} />}
+        <div className="about">
+            <div className="about-image">
+                {image && <img src={image} alt="About" />}
+            </div>
             <p>{content}</p>
         </div>
     );

@@ -8,11 +8,8 @@ export const NavbarProvider = ({ children }) => {
         { name: 'Anasayfa', path: '/' },
         { name: 'Hakkımızda', path: '/about' },
         { name: 'Ürünler', path: '/products' },
-        { name: 'Kategoriler', path: '/gallery' },
         { name: 'İletişim', path: '/contact' },
     ]);
-
-
 
     const addMenuItem = (item) => {
         const updatedItems = [...menuItems, item];
