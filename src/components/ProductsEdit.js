@@ -64,17 +64,22 @@ const ProductsEdit = () => {
 
     return (
         <div>
-            <h2>Ürün Düzenle</h2>
-            <button onClick={() => handleOpenModal()}>Ekle</button>
-            {productItems.map((item, index) => (
-                <div key={index}>
-                    <img src={item.image} alt={item.name} style={{ maxWidth: '200px', marginTop: '10px' }} />
-                    <p>{item.name}</p>
-                    <p>{item.price} TL</p>
-                    <button onClick={() => handleOpenModal(index)}>Düzenle</button>
-                    <button onClick={() => handleDeleteItem(index)}>Sil</button>
-                </div>
-            ))}
+            <button onClick={() => handleOpenModal()}>Ürün Ekle</button>
+            <button onClick={() => handleOpenModal()}>Kategori Ekle</button>
+            <div className="product">
+                {productItems.map((item, index) => (
+                    <div className="product-box">
+                        <div key={index}>
+                            <img src={item.image} alt={item.name} style={{ maxWidth: '200px', marginTop: '10px' }} />
+                            <p>{item.name}</p>
+                            <p>{item.price} TL</p>
+                            <button onClick={() => handleOpenModal(index)}>Düzenle</button>
+                            <button onClick={() => handleDeleteItem(index)}>Sil</button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
             {showModal && (
                 <div className="modal">
                     <h2>{editingIndex !== null ? 'Resmi Düzenle' : 'Resim Ekle'}</h2>

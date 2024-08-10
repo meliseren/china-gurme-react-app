@@ -53,13 +53,10 @@ header {
     }
 }
 
-.product {
+.products {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
 
-
-    .product-box {
+    .product-json {
         border: 1px solid #c3c3c3;
         padding: 1rem;
         border-radius: .5rem;
@@ -72,9 +69,34 @@ header {
         min-height: 10rem;
         width: 15rem;
         height: 15rem;
+    }
 
-        img {
-            width: 10rem;
+
+    .product {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: 1rem 1rem;
+
+
+        .product-box {
+            border: 1px solid #c3c3c3;
+            padding: 1rem;
+            border-radius: .5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 2rem 0.5rem;
+            min-width: 10rem;
+            min-height: 10rem;
+            width: 15rem;
+            height: 15rem;
+
+            img {
+                width: 10rem;
+            }
         }
     }
 }
