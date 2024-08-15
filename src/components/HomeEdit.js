@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
-import { NavbarContext } from './NavbarContext';
+import React, { useState } from 'react';
+// import { NavbarContext } from './NavbarContext';
 
 const HomeEdit = () => {
-    const { menuItems } = useContext(NavbarContext);
+    // const { menuItems } = useContext(NavbarContext);
     const [content, setContent] = useState(localStorage.getItem('homeContent') || 'Home içeriği burada görünecek.');
     const [image, setImage] = useState(localStorage.getItem('homeImage') || '');
 

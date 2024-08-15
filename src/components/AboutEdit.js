@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
-import { NavbarContext } from './NavbarContext';
+import React, { useState } from 'react';
+// import { NavbarContext } from './NavbarContext';
 
 const AboutEdit = () => {
-    const { menuItems } = useContext(NavbarContext);
+    // const { menuItems } = useContext(NavbarContext);
     const [content, setContent] = useState(localStorage.getItem('aboutContent') || 'Hakkımızda içeriği burada görünecek.');
     const [image, setImage] = useState(localStorage.getItem('aboutImage') || '');
 

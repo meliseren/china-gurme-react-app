@@ -1,0 +1,226 @@
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Cat-1"
+        },
+        {
+            "id": 2,
+            "name": "Cat-2"
+        },
+        {
+            "id": 3,
+            "name": "Cat-3"
+        },
+        {
+            "name": "Cat-4",
+            "id": 4
+        },
+        {
+            "name": "Cat-5",
+            "id": 5
+        },
+        {
+            "name": "Cat-6",
+            "id": 6
+        },
+        {
+            "name": "Cat-7",
+            "id": 7
+        },
+        {
+            "name": "Cat-8",
+            "id": 8
+        },
+        {
+            "name": "Cat-9",
+            "id": 9
+        },
+        {
+            "name": "Cat-10",
+            "id": 10
+        },
+        {
+            "name": "Cat-11",
+            "id": 11
+        }
+    ],
+    "products": [
+        {
+            "id": 100,
+            "name": "P-1 C-1",
+            "price": 1.99,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 1,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 101,
+            "name": "P-2 C-2",
+            "price": 2.99,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 2,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 102,
+            "name": "P-3 C-3",
+            "price": 5.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 3,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 103,
+            "name": "P-4 C-4",
+            "price": 1.99,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 4,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 104,
+            "name": "P-5 C-5",
+            "price": 2.99,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 5,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 105,
+            "name": "P-6 C-6",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 6,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 106,
+            "name": "P-7 C-7",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 7,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 107,
+            "name": "P-8 C-8",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 8,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 108,
+            "name": "P-9 C-9",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 9,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 109,
+            "name": "P-10 C-10",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 10,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 110,
+            "name": "P-11 C-11",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 11,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 111,
+            "name": "P-12 C-1",
+            "price": 1.99,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 1,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 112,
+            "name": "P-13 C-2",
+            "price": 2.99,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 2,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 113,
+            "name": "P-14 C-3",
+            "price": 5.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 3,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 114,
+            "name": "P-15 C-4",
+            "price": 1.99,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 4,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 115,
+            "name": "P-16 C-5",
+            "price": 2.99,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 5,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 116,
+            "name": "P-17 C-6",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 6,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 117,
+            "name": "P-18 C-7",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 7,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 118,
+            "name": "P-19 C-8",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 8,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 119,
+            "name": "P-20 C-9",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 9,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 120,
+            "name": "P-21 C-10",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 10,
+            "detail": "Lorem Ipsum"
+        },
+        {
+            "id": 121,
+            "name": "P-22 C-11",
+            "price": 3.49,
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "category": 11,
+            "detail": "Lorem Ipsum"
+        }
+    ]
+}

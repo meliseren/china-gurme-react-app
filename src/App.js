@@ -11,6 +11,7 @@ import Home from './view/Home';
 import About from './view/About';
 import Products from './view/Products';
 import Contact from './view/Contact';
+import ProductDetail from './view/ProductDetail';
 
 // Admin Components
 import Login from './admin/Login';
@@ -20,26 +21,30 @@ import AboutEdit from './components/AboutEdit';
 import ProductsEdit from './components/ProductsEdit';
 import ContactEdit from './components/ContactEdit';
 import { NavbarProvider } from './components/NavbarContext';
+import { SearchProvider } from './view/SearchContext';
 
 function App() {
   return (
     <Router>
-      <NavbarProvider>
-        <Topheader />
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={<AdminHome />} />
-          <Route path="/admin/edit/" element={<HomeEdit />} />
-          <Route path="/admin/edit/about" element={<AboutEdit />} />
-          <Route path="/admin/edit/products" element={<ProductsEdit />} />
-          <Route path="/admin/edit/contact" element={<ContactEdit />} />
-        </Routes>
-      </NavbarProvider>
+      <SearchProvider>
+        <NavbarProvider>
+          <Topheader />
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/products/:slug" element={<ProductDetail />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<AdminHome />} />
+            <Route path="/admin/edit/" element={<HomeEdit />} />
+            <Route path="/admin/edit/about" element={<AboutEdit />} />
+            <Route path="/admin/edit/products" element={<ProductsEdit />} />
+            <Route path="/admin/edit/contact" element={<ContactEdit />} />
+          </Routes>
+        </NavbarProvider>
+      </SearchProvider>
     </Router>
   );
 }

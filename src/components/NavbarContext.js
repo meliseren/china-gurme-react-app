@@ -1,6 +1,5 @@
 import React, { createContext, useState } from 'react';
 
-// Context oluşturma
 export const NavbarContext = createContext();
 
 export const NavbarProvider = ({ children }) => {

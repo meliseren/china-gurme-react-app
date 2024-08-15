@@ -2,58 +2,58 @@
     "categories": [
         {
             "id": 1,
-            "name": "Noodles"
+            "name": "Erişteler"
         },
         {
             "id": 2,
-            "name": "Soy Sauce"
+            "name": "Soslar"
         },
         {
             "id": 3,
-            "name": "Canned Goods"
+            "name": "Konserveler"
         }
     ],
     "products": [
         {
             "id": 1,
-            "name": "Instant Noodles",
+            "name": "A Erişte",
             "price": 1.99,
-            "image": "noodles.jpg",
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
             "category": 1
         },
         {
             "id": 2,
-            "name": "Soy Sauce",
+            "name": "A Sos",
             "price": 2.99,
-            "image": "soysauce.jpg",
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
             "category": 2
         },
         {
             "id": 3,
-            "name": "Canned Tuna",
+            "name": "A Konserve",
             "price": 3.49,
-            "image": "cannedtuna.jpg",
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
             "category": 3
         },
         {
             "id": 4,
-            "name": "Test Noodles",
+            "name": "B Erişte",
             "price": 1.99,
-            "image": "noodles.jpg",
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
             "category": 1
         },
         {
             "id": 5,
-            "name": "Test Sauce",
+            "name": "B Sos",
             "price": 2.99,
-            "image": "soysauce.jpg",
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
             "category": 2
         },
         {
             "id": 6,
-            "name": "Test Tuna",
+            "name": "B Konserve",
             "price": 3.49,
-            "image": "cannedtuna.jpg",
+            "image": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
             "category": 3
         }
     ]

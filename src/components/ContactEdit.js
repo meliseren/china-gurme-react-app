@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const ContactEdit = ({ initialContent, onSave }) => {
     const [content, setContent] = useState(initialContent);

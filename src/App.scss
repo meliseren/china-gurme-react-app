@@ -79,6 +79,11 @@ header {
         gap: 1.5rem;
         padding: 1rem 1rem;
 
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
 
         .product-box {
             border: 1px solid #c3c3c3;
@@ -93,6 +98,8 @@ header {
             min-height: 10rem;
             width: 15rem;
             height: 15rem;
+
+
 
             img {
                 width: 10rem;
@@ -123,4 +130,11 @@ header {
 
 .modal button {
     margin-top: 10px;
+}
+
+.categories-edit ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 3rem 0;
 }

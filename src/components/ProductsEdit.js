@@ -1,102 +1,118 @@
 import React, { useState, useEffect } from 'react';
 
 const ProductsEdit = () => {
-    const [productItems, setProductItems] = useState(JSON.parse(localStorage.getItem('productItems')) || []);
-    const [showModal, setShowModal] = useState(false);
-    const [newImage, setNewImage] = useState('');
-    const [newImageName, setNewImageName] = useState('');
-    const [newPrice, setNewPrice] = useState('');
-    const [editingIndex, setEditingIndex] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [newCategoryName, setNewCategoryName] = useState('');
+    const [addNewCategoryNameModal, setAddNewCategoryNameModal] = useState(false);
+    const [deleteWarning, setDeleteWarning] = useState(false);
 
-    const handleAddImage = () => {
-        if (editingIndex !== null) {
-            const updatedItems = [...productItems];
-            updatedItems[editingIndex] = { image: newImage, name: newImageName, price: newPrice };
-            setProductItems(updatedItems);
-            localStorage.setItem('productItems', JSON.stringify(updatedItems));
+    useEffect(() => {
+        fetch('http://localhost:3030/products')
+            .then(response => {
+                console.log('Response: ', response);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data: ', data);
+                return setCategories(data.categories);
+            }
+            )
+            .catch(error => console.error('Error fetching categories:', error));
+    }, []);
+
+    const handleAddCategory = () => {
+        setAddNewCategoryNameModal(true);
+    }
+
+    const handleAddCategoryName = () => {
+        if (newCategoryName.trim() !== '') {
+            const newCategory = {
+                name: newCategoryName
+            };
+
+            fetch('http://localhost:3030/categories', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newCategory),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setCategories([...categories, data]);
+                    setNewCategoryName('');
+                    setAddNewCategoryNameModal(false);
+                })
+                .catch((error) => {
+                    console.error('Error adding category:', error);
+                });
         } else {
-            const updatedItems = [...productItems, { image: newImage, name: newImageName, price: newPrice }];
-            setProductItems(updatedItems);
-            localStorage.setItem('productItems', JSON.stringify(updatedItems));
+            alert('Kategori adı boş olamaz!');
         }
-        handleCloseModal();
-    };
-
-    const handleOpenModal = (index = null) => {
-        if (index !== null) {
-            setNewImage(productItems[index].image);
-            setNewImageName(productItems[index].name);
-            setNewPrice(productItems[index].price);
-            setEditingIndex(index);
-        } else {
-            setNewImage('');
-            setNewImageName('');
-            setNewPrice('');
-            setEditingIndex(null);
-        }
-        setShowModal(true);
-    };
-
-    const handleDeleteItem = (index) => {
-        const updatedItems = productItems.filter((_, i) => i !== index);
-        setProductItems(updatedItems);
-        localStorage.setItem('productItems', JSON.stringify(updatedItems));
-    };
+    }
 
     const handleCloseModal = () => {
-        setShowModal(false);
-        setNewImage('');
-        setNewImageName('');
-        setNewPrice('');
-        setEditingIndex(null);
+        setAddNewCategoryNameModal(false);
+        setDeleteWarning(false);
     };
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setNewImage(reader.result);
-            };
-            reader.readAsDataURL(file);
+    const [categoryToDelete, setCategoryToDelete] = useState(null);
+
+    const handleDeleteWarning = (categoryId) => {
+        setCategoryToDelete(categoryId);
+        setDeleteWarning(true);
+    }
+
+    const handleDeleteCategory = () => {
+        if (categoryToDelete !== null) {
+            fetch(`http://localhost:3030/products`, {
+                method: 'DELETE'
+            })
+                .then(() => {
+                    setCategories(categories.filter(category => category.id !== categoryToDelete));
+                    setCategoryToDelete(null);
+                    setDeleteWarning(false);
+                })
+                .catch((error) => {
+                    console.error('Error deleting category:', error);
+                });
         }
-    };
+    }
+
+
 
     return (
         <div>
-            <button onClick={() => handleOpenModal()}>Ürün Ekle</button>
-            <button onClick={() => handleOpenModal()}>Kategori Ekle</button>
-            <div className="product">
-                {productItems.map((item, index) => (
-                    <div className="product-box">
-                        <div key={index}>
-                            <img src={item.image} alt={item.name} style={{ maxWidth: '200px', marginTop: '10px' }} />
-                            <p>{item.name}</p>
-                            <p>{item.price} TL</p>
-                            <button onClick={() => handleOpenModal(index)}>Düzenle</button>
-                            <button onClick={() => handleDeleteItem(index)}>Sil</button>
-                        </div>
-                    </div>
-                ))}
+            <button onClick={() => handleAddCategory()}>Kategori Ekle</button>
+            <div className='categories-edit'>
+                <ul>
+                    {categories.map((category) => (
+                        <li key={category.id}>
+                            {category.name}
+                            <button>Düzenle</button>
+                            <button onClick={() => handleDeleteWarning(category.id)}>Sil</button>
+                        </li>
+                    ))}
+                </ul>
             </div>
-
-            {showModal && (
+            {addNewCategoryNameModal && (
                 <div className="modal">
-                    <h2>{editingIndex !== null ? 'Resmi Düzenle' : 'Resim Ekle'}</h2>
-                    <input type="file" onChange={handleImageChange} />
+                    <p>Kategori Ekle</p>
                     <input
                         type="text"
-                        value={newImageName}
-                        onChange={(e) => setNewImageName(e.target.value)}
-                        placeholder="Ürün Adı"
+                        placeholder="Kategori Adı"
+                        value={newCategoryName}
+                        onChange={(e) => setNewCategoryName(e.target.value)}
                     />
-                    <input
-                        type="text"
-                        value={newPrice}
-                        onChange={(e) => setNewPrice(e.target.value)}
-                        placeholder="Ürün Fiyatı"
-                    />
-                    <button onClick={handleAddImage}>{editingIndex !== null ? 'Güncelle' : 'Ekle'}</button>
+                    <button onClick={handleAddCategoryName}>Kaydet</button>
+                    <button onClick={handleCloseModal}>Kapat</button>
+                </div>
+            )}
+            {deleteWarning && (
+                <div className="modal">
+                    <p>Bunu yapmak istediğinize emin misiniz?</p>
+                    <p>Bu işlem geri alınmayacaktır.</p>
+                    <button onClick={handleDeleteCategory}>Sil</button>
                     <button onClick={handleCloseModal}>Kapat</button>
                 </div>
             )}
@@ -105,3 +121,134 @@ const ProductsEdit = () => {
 };
 
 export default ProductsEdit;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+
+// import productsData from './db/db.json';
+
+
+// const ProductsEdit = () => {
+//     const [categories, setCategories] = useState([]);
+//     const [newCategoryName, setNewCategoryName] = useState('');
+//     const [addNewCategoryNameModal, setAddNewCategoryNameModal] = useState(false);
+
+//     useEffect(() => {
+//         setCategories(productsData.categories);
+//     }, []);
+
+//     const handleAddCategory = (index = null) => {
+//         if (index !== null) {
+//             setNewCategoryName();
+//             console.log(setNewCategoryName);
+//         }
+//         setAddNewCategoryNameModal(true);
+//     }
+
+//     const handleAddCategoryName = () => {
+//         if (newCategoryName.trim() !== '') {
+//             const newCategory = {
+//                 id: categories.length + 1,
+//                 name: newCategoryName
+//             };
+
+//             setCategories([...categories, newCategory]);
+//             setNewCategoryName('');
+//             setAddNewCategoryNameModal(false);
+//         } else {
+//             alert('Kategori adı boş olamaz!');
+//         }
+//     }
+
+//     const handleCloseModal = () => {
+//         setAddNewCategoryNameModal(false);
+//     };
+
+//     return (
+//         <div>
+//             <button onClick={() => handleAddCategory()}>Kategori Ekle</button>
+//             <div className='categories-edit'>
+//                 <ul>
+//                     {categories.map((category) => (
+//                         <li key={category.id} >
+//                             {category.name}
+//                             <button>Düzenle</button>
+//                             <button>Sil</button>
+//                         </li>
+//                     ))}
+//                 </ul>
+//             </div>
+//             {
+//                 addNewCategoryNameModal && (
+//                     <div className="modal">
+//                         <p>Kategori Ekle</p>
+//                         <input
+//                             type="text"
+//                             placeholder="Kategori Adı"
+//                             value={newCategoryName}
+//                             onChange={(e) => {
+//                                 setNewCategoryName(e.target.value);
+//                             }}
+//                         />
+//                         <button onClick={handleAddCategoryName}>Kaydet</button>
+//                         <button onClick={handleCloseModal}>Kapat</button>
+//                     </div>
+//                 )
+//             }
+//         </div>
+//     );
+// };
+
+// export default ProductsEdit;
