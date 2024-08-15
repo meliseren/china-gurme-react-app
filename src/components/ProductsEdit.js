@@ -65,7 +65,7 @@ const ProductsEdit = () => {
 
     const handleDeleteCategory = () => {
         if (categoryToDelete !== null) {
-            fetch(`http://localhost:3030/products`, {
+            fetch(`http://localhost:3030/products/${categoryToDelete}`, {
                 method: 'DELETE'
             })
                 .then(() => {
