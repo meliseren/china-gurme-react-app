@@ -5,6 +5,8 @@
 
 // Variables
 $blue-color: #161b22;
+$gray-color: #f3f3f3;
+$dark-blue-color: #106ebe;
 
 * {
     font-family: 'Poppins', sans-serif;
@@ -146,61 +148,131 @@ header {
 .login-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    border: 1px solid black;
+    // justify-content: center;
+    // align-items: center;
+    gap: 1.2rem;
+    border: 1px solid $dark-blue-color;
     border-radius: 1rem;
-    padding: 1rem 1rem;
-    margin: 4rem 32rem;
+    padding: 2rem 1.2rem;
+    margin: 10rem 31rem;
+    background-color: $gray-color;
+
+    .login-title {
+        text-align: center;
+        font-size: 1.2rem;
+        color: $dark-blue-color;
+        font-weight: 600;
+    }
 
     .login-form {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 1rem;
+        // align-items: center;
+        gap: 1.2rem;
 
-        .login-input {
+        .login-input-container {
             display: flex;
             flex-direction: column;
-        }
-    }
+            gap: .5rem;
 
-    .login-btn {
-        padding: .5rem;
-        border-radius: .5rem;
-        color: white;
-        background-color: green;
-        border: none;
-    }
-}
+            .login-input-label {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
 
-// Admin Home
-.admin-home-container {
-    border: 1px solid black;
-    border-radius: .5rem;
-    margin: 1rem 1rem;
-    padding: 1rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    background-color: $blue-color;
+                .login-icon {
+                    color: $dark-blue-color;
+                }
 
-    ul {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+                label {
+                    color: $dark-blue-color;
+                }
+            }
 
-        li {
-            border-bottom: 1px solid black;
-
-            a {
-                color: white;
-
+            .login-input {
+                height: 2rem;
+                padding: 1rem .5rem;
             }
         }
     }
 
 
+    .login-btn {
+        padding: .5rem;
+        border-radius: .5rem;
+        color: #fff;
+        background-color: $dark-blue-color;
+        border: none;
+        cursor: pointer;
 
+        .login-submit-icon {
+            color: #fff;
+            margin-right: .5rem;
+        }
+    }
+
+}
+
+// Products Edit
+.products-edit {
+    border: 1px solid $dark-blue-color;
+    border-radius: .5rem;
+    margin: 2rem;
+    background-color: $dark-blue-color;
+    padding: 1rem 2rem;
+
+    .products-edit-title {
+        font-size: 1.2rem;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .products-edit-add-category {
+        display: flex;
+
+        .products-edit-info {
+            color: #fff;
+        }
+
+        .btn-add-category {
+            padding: .5rem;
+            border-radius: .5rem;
+            border: none;
+        }
+    }
+
+    .products-edit-list {
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+
+            li {
+                display: flex;
+                justify-content: space-between;
+                border: 1px solid $gray-color;
+                padding: .5rem;
+                color: #fff;
+
+                .button {
+                    .btn-edit {
+                        padding: .5rem;
+                        margin-right: .5rem;
+                        color: $dark-blue-color;
+                        background-color: #fff;
+                        border: none;
+                        border-radius: .5rem;
+                    }
+
+                    .btn-delete {
+                        padding: .5rem;
+                        color: #fff;
+                        background-color: #63e6be;
+                        border: none;
+                        border-radius: .5rem;
+                    }
+                }
+            }
+        }
+    }
 }

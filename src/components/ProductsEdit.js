@@ -82,25 +82,31 @@ const ProductsEdit = () => {
 
 
     return (
-        <div>
-            <button onClick={() => handleAddCategory()}>Kategori Ekle</button>
-            <div className='categories-edit'>
+        <div className='products-edit'>
+            <p className='products-edit-title'>Ürün Düzenleme</p>
+            <div className='products-edit-add-category'>
+                <p className='products-edit-info'>Yeni bir kategori eklemek için tıklayınız.</p>
+                <button onClick={() => handleAddCategory()} className='btn-add-category'>Kategori Ekle</button>
+            </div>
+            <div className='products-edit-list'>
                 <ul>
                     {categories.map((category) => (
                         <li key={category.id}>
                             {category.name}
-                            <button>Düzenle</button>
-                            <button onClick={() => handleDeleteWarning(category.id)}>Sil</button>
+                            <div className="button">
+                                <button className='btn-edit'>Düzenle</button>
+                                <button onClick={() => handleDeleteWarning(category.id)} className='btn-delete'>Sil</button>
+                            </div>
                         </li>
                     ))}
                 </ul>
             </div>
             {addNewCategoryNameModal && (
-                <div className="modal">
+                <div className='modal'>
                     <p>Kategori Ekle</p>
                     <input
-                        type="text"
-                        placeholder="Kategori Adı"
+                        type='text'
+                        placeholder='Kategori Adı'
                         value={newCategoryName}
                         onChange={(e) => setNewCategoryName(e.target.value)}
                     />
@@ -109,11 +115,21 @@ const ProductsEdit = () => {
                 </div>
             )}
             {deleteWarning && (
-                <div className="modal">
-                    <p>Bunu yapmak istediğinize emin misiniz?</p>
-                    <p>Bu işlem geri alınmayacaktır.</p>
+                <div className='modal'>
+                    <p>
+                        Eğer bu kategoriyi silerseniz,
+                    </p>
+                    <p>
+                        bu kategoriye ait ürünlerde silinecektir.
+                    </p>
+                    <p>
+                        Bu işlem geri alınamaz.
+                    </p>
+                    <p>
+                        Devam etmek istiyor musunuz?
+                    </p>
                     <button onClick={handleDeleteCategory}>Sil</button>
-                    <button onClick={handleCloseModal}>Kapat</button>
+                    <button onClick={handleCloseModal}>Vazgeç</button>
                 </div>
             )}
         </div>
@@ -232,11 +248,11 @@ export default ProductsEdit;
 //             </div>
 //             {
 //                 addNewCategoryNameModal && (
-//                     <div className="modal">
+//                     <div className='modal'>
 //                         <p>Kategori Ekle</p>
 //                         <input
-//                             type="text"
-//                             placeholder="Kategori Adı"
+//                             type='text'
+//                             placeholder='Kategori Adı'
 //                             value={newCategoryName}
 //                             onChange={(e) => {
 //                                 setNewCategoryName(e.target.value);

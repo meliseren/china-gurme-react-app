@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Style
@@ -21,18 +21,73 @@ import { SearchProvider } from './view/SearchContext';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      localStorage.removeItem('isAuthenticated');
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   return (
     <Router>
       <SearchProvider>
         <NavbarProvider>
-          <Topheader />
-          <Header />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/products/:slug" element={<ProductDetail />} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <Topheader />
+                  <Header />
+                  <Home />
+                </>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <>
+                  <Topheader />
+                  <Header />
+                  <About />
+                </>
+              }
+            />
+            <Route
+              path="/products"
+              element={
+                <>
+                  <Topheader />
+                  <Header />
+                  <Products />
+                </>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <>
+                  <Topheader />
+                  <Header />
+                  <Contact />
+                </>
+              }
+            />
+            <Route
+              path="/products/:slug"
+              element={
+                <>
+                  <Topheader />
+                  <Header />
+                  <ProductDetail />
+                </>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route
               path="/products-edit"
