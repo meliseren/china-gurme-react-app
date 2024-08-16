@@ -15,13 +15,10 @@ import ProductDetail from './view/ProductDetail';
 
 // Admin Components
 import Login from './admin/Login';
-import AdminHome from './components/AdminHome';
-import HomeEdit from './components/HomeEdit';
-import AboutEdit from './components/AboutEdit';
 import ProductsEdit from './components/ProductsEdit';
-import ContactEdit from './components/ContactEdit';
 import { NavbarProvider } from './components/NavbarContext';
 import { SearchProvider } from './view/SearchContext';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
@@ -37,11 +34,14 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/admin" element={<AdminHome />} />
-            <Route path="/admin/edit/" element={<HomeEdit />} />
-            <Route path="/admin/edit/about" element={<AboutEdit />} />
-            <Route path="/admin/edit/products" element={<ProductsEdit />} />
-            <Route path="/admin/edit/contact" element={<ContactEdit />} />
+            <Route
+              path="/products-edit"
+              element={
+                <PrivateRoute>
+                  <ProductsEdit />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </NavbarProvider>
       </SearchProvider>

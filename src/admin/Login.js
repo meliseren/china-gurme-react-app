@@ -8,18 +8,22 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (username === 'a' && password === 'a') {
-            navigate('/admin');
+
+        if (username === 'admin' && password === 'admin') {
+            // Giriş bilgilerini doğrula ve isAuthenticated değerini true yap
+            localStorage.setItem('isAuthenticated', 'true');
+            // Yönlendirme yap
+            navigate('/products-edit');
         } else {
             alert('Kullanıcı adı veya şifre yanlış');
         }
     };
 
     return (
-        <div className="Login">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
+        <div className="login-container">
+            <p>Giriş Yap</p>
+            <form onSubmit={handleSubmit} className="login-form">
+                <div className="login-input">
                     <label>Kullanıcı Adı:</label>
                     <input
                         type="text"
@@ -28,7 +32,7 @@ const Login = () => {
                         required
                     />
                 </div>
-                <div>
+                <div className="login-input">
                     <label>Şifre:</label>
                     <input
                         type="password"
@@ -37,7 +41,7 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit">Giriş Yap</button>
+                <button type="submit" className="btn login-btn">Giriş Yap</button>
             </form>
         </div>
     );

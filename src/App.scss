@@ -3,6 +3,9 @@
     src: url('./assets/fonts/Poppins-Regular.ttf') format('truetype');
 }
 
+// Variables
+$blue-color: #161b22;
+
 * {
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
@@ -137,4 +140,67 @@ header {
     flex-direction: column;
     gap: 1rem;
     padding: 3rem 0;
+}
+
+// Login
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 1rem 1rem;
+    margin: 4rem 32rem;
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+
+        .login-input {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .login-btn {
+        padding: .5rem;
+        border-radius: .5rem;
+        color: white;
+        background-color: green;
+        border: none;
+    }
+}
+
+// Admin Home
+.admin-home-container {
+    border: 1px solid black;
+    border-radius: .5rem;
+    margin: 1rem 1rem;
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: $blue-color;
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        li {
+            border-bottom: 1px solid black;
+
+            a {
+                color: white;
+
+            }
+        }
+    }
+
+
+
 }
