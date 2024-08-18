@@ -8,18 +8,31 @@ import { faLock, faRightToBracket, faUser } from "@fortawesome/free-solid-svg-ic
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const [userNameErr, setUserNameErr] = useState(false);
+    const [passwordErr, setPasswordErr] = useState(false);
+    const [submitErr, setSubmitErr] = useState(false);
+
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (username === 'admin' && password === 'admin') {
-            // Oturumu başlat
+        if (username && password) {
+            setUserNameErr(false);
+            setPasswordErr(false);
+            setSubmitErr(false);
             localStorage.setItem('isAuthenticated', 'true');
             localStorage.setItem('loginTime', Date.now());
-            navigate('/products-edit');
+            if (username === 'melis' && password === 'melis') {
+                navigate('/category-edit');
+            } else {
+                setSubmitErr(true);
+            }
+
         } else {
-            alert('Kullanıcı adı veya şifre yanlış');
+            setUserNameErr(true);
+            setPasswordErr(true);
         }
     };
 
@@ -38,41 +51,48 @@ const Login = () => {
 
 
     return (
-        <div className="login-container">
-            <p className="login-title">Panel Girişi</p>
-            <form onSubmit={handleSubmit} className="login-form">
-                <div className="login-input-container">
-                    <div className="login-input-label">
-                        <FontAwesomeIcon icon={faUser} className='login-icon' />
-                        <label>Kullanıcı Adı:</label>
+        <div className="login">
+            <div className="login-container">
+                <p className="login-title">Panel Girişi</p>
+                <form onSubmit={handleSubmit} className="login-form">
+                    <div className="login-input-container">
+                        <div className="login-input-label">
+                            <FontAwesomeIcon icon={faUser} className='login-icon' />
+                            <label>Kullanıcı Adı:</label>
+                        </div>
+                        <input
+                            type="text"
+                            className='login-input'
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        {userNameErr && <p className='input-err'>**Kullanıcı adı boş olamaz!</p>}
                     </div>
-                    <input
-                        type="text"
-                        className='login-input'
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="login-input-container">
-                    <div className="login-input-label">
-                        <FontAwesomeIcon icon={faLock} className='login-icon' />
-                        <label>Şifre:</label>
+                    <div className="login-input-container">
+                        <div className="login-input-label">
+                            <FontAwesomeIcon icon={faLock} className='login-icon' />
+                            <label>Şifre:</label>
+                        </div>
+                        <input
+                            type="password"
+                            className='login-input'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        {passwordErr && <p className='input-err'>**Şifre boş olamaz!</p>}
                     </div>
-                    <input
-                        type="password"
-                        className='login-input'
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit" className="btn login-btn">
-                    <FontAwesomeIcon icon={faRightToBracket} className='login-submit-icon' />
-                    Giriş Yap
-                </button>
-            </form>
+                    <button
+                        type="submit"
+                        className="btn login-btn"
+                    >
+                        <FontAwesomeIcon icon={faRightToBracket} className='login-submit-icon' />
+                        Giriş Yap
+                    </button>
+                    {submitErr && <p className='input-err'>**Kullanıcı adı veya şifre hatalı!</p>}
+                </form>
+            </div>
         </div>
+
     );
 }
 

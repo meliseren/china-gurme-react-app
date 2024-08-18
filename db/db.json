@@ -1,1 +1,60 @@
-{"categories":[{"id":2,"name":"Cat-2"},{"id":3,"name":"Cat-3"},{"name":"Cat-4","id":4},{"name":"Cat-5","id":5},{"name":"Cat-6","id":6},{"name":"Cat-7","id":7},{"name":"Cat-8","id":8},{"name":"Cat-9","id":9},{"name":"Cat-10","id":10},{"name":"Cat-11","id":11},{"name":"Cat-12","id":11}],"products":[{"id":101,"name":"P-2 C-2","price":2.99,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":2,"detail":"Lorem Ipsum"},{"id":102,"name":"P-3 C-3","price":5.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":3,"detail":"Lorem Ipsum"},{"id":103,"name":"P-4 C-4","price":1.99,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":4,"detail":"Lorem Ipsum"},{"id":104,"name":"P-5 C-5","price":2.99,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":5,"detail":"Lorem Ipsum"},{"id":105,"name":"P-6 C-6","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":6,"detail":"Lorem Ipsum"},{"id":106,"name":"P-7 C-7","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":7,"detail":"Lorem Ipsum"},{"id":107,"name":"P-8 C-8","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":8,"detail":"Lorem Ipsum"},{"id":108,"name":"P-9 C-9","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":9,"detail":"Lorem Ipsum"},{"id":109,"name":"P-10 C-10","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":10,"detail":"Lorem Ipsum"},{"id":110,"name":"P-11 C-11","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":11,"detail":"Lorem Ipsum"},{"id":112,"name":"P-13 C-2","price":2.99,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":2,"detail":"Lorem Ipsum"},{"id":113,"name":"P-14 C-3","price":5.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":3,"detail":"Lorem Ipsum"},{"id":114,"name":"P-15 C-4","price":1.99,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":4,"detail":"Lorem Ipsum"},{"id":115,"name":"P-16 C-5","price":2.99,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":5,"detail":"Lorem Ipsum"},{"id":116,"name":"P-17 C-6","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":6,"detail":"Lorem Ipsum"},{"id":117,"name":"P-18 C-7","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":7,"detail":"Lorem Ipsum"},{"id":118,"name":"P-19 C-8","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":8,"detail":"Lorem Ipsum"},{"id":119,"name":"P-20 C-9","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":9,"detail":"Lorem Ipsum"},{"id":120,"name":"P-21 C-10","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":10,"detail":"Lorem Ipsum"},{"id":121,"name":"P-22 C-11","price":3.49,"image":"https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg","category":11,"detail":"Lorem Ipsum"}]}
+{
+    "categories": [
+        {
+            "name": "Test-3",
+            "order": 3,
+            "id": "a36c2b6a-0eff-43cb-9633-21e37a0c8476"
+        },
+        {
+            "name": "Test-2",
+            "order": 2,
+            "id": "49ef6cd0-2b58-466d-9794-48d25d78ff90"
+        },
+        {
+            "name": "Test-5",
+            "order": 5,
+            "id": "e72e9071-f5de-4e35-b2ce-9424e09a80dd"
+        },
+        {
+            "name": "Test-4",
+            "order": 4,
+            "id": "47c26fa7-22e3-4134-90b4-eb982d5b67c1"
+        },
+        {
+            "name": "Test-6",
+            "order": 6,
+            "id": "44c08b85-21eb-49ed-868c-b523bc851aba"
+        },
+        {
+            "name": "Test-7",
+            "order": 7,
+            "id": "7ec3e3ab-031d-4ab0-b186-d6dd3eb0c8fa"
+        },
+        {
+            "name": "Test-9",
+            "order": 9,
+            "id": "bfaceee5-32f0-4fb0-8d16-92c8b41216bd"
+        },
+        {
+            "name": "Test-8",
+            "order": 8,
+            "id": "3b651ab6-f29f-47b5-9a68-f92208865c93"
+        },
+        {
+            "name": "Test-10",
+            "order": 10,
+            "id": "a43fa2a2-0fa0-4f81-8cc9-9ce2ff777c8d"
+        },
+        {
+            "name": "Test-1",
+            "order": 1,
+            "id": "bdec6db9-ba4c-4f4b-af5d-457ecd88a8fc"
+        },
+        {
+            "name": "Test-100",
+            "order": 100,
+            "id": "c9d92196-f034-4f8f-bd2c-6f6b2191733e"
+        }
+    ],
+    "products": []
+}

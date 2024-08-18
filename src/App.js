@@ -15,12 +15,15 @@ import ProductDetail from './view/ProductDetail';
 
 // Admin Components
 import Login from './admin/Login';
-import ProductsEdit from './components/ProductsEdit';
+import CategoryEdit from './components/CategoryEdit';
 import { NavbarProvider } from './components/NavbarContext';
 import { SearchProvider } from './view/SearchContext';
 import PrivateRoute from './components/PrivateRoute';
+import ProductEdit from './components/ProductEdit';
+import ProductDetailEdit from './components/ProductDetailEdit';
 
 function App() {
+  // Sayfa kapandığında veya yenilendiğinde oturum bilgilerini siler
   useEffect(() => {
     const handleBeforeUnload = () => {
       localStorage.removeItem('isAuthenticated');
@@ -90,10 +93,18 @@ function App() {
             />
             <Route path="/login" element={<Login />} />
             <Route
-              path="/products-edit"
+              path="/category-edit"
               element={
                 <PrivateRoute>
-                  <ProductsEdit />
+                  <CategoryEdit />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/product-edit"
+              element={
+                <PrivateRoute>
+                  <ProductEdit />
                 </PrivateRoute>
               }
             />
