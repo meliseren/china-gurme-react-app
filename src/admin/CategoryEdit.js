@@ -4,7 +4,7 @@ import { faFolderPlus, faSave, faTriangleExclamation } from "@fortawesome/free-s
 import { useNavigate } from 'react-router-dom';
 import Modal from './components/modals/Modal';
 
-// Buyyons Component Import
+// Buttons Component Import
 import AddButton from './components/buttons/AddButton';
 import DeleteButton from './components/buttons/DeleteButton';
 import EditButton from './components/buttons/EditButton';
@@ -13,26 +13,36 @@ import CloseButton from './components/buttons/CloseButton';
 
 const CategoryEdit = () => {
     const navigate = useNavigate();
-    const [categories, setCategories] = useState([]);
-    const [newCategoryName, setNewCategoryName] = useState('');
-    const [newCategoryOrder, setNewCategoryOrder] = useState('');
-    const [addNewCategoryNameModal, setAddNewCategoryNameModal] = useState(false);
-    const [deleteWarning, setDeleteWarning] = useState(false);
-    const [categoryToDelete, setCategoryToDelete] = useState(null);
-    const [editingCategory, setEditingCategory] = useState(null);
+    const [state, setState] = useState({
+        categories: [],
+        newCategoryName: '',
+        newCategoryOrder: '',
+        addNewCategoryNameModal: false,
+        deleteWarning: false,
+        categoryToDelete: null,
+        editingCategory: null
+    });
+
+    const { categories, newCategoryName, newCategoryOrder, addNewCategoryNameModal, deleteWarning, categoryToDelete, editingCategory } = state;
 
     // Bileşen yüklendiğinde sunucudan ürün verilerini alır, kategorileri sıralar ve bunu state'e kaydeder
     useEffect(() => {
         fetch('http://localhost:3030/products')
             .then(response => response.json())
-            .then(data => setCategories(data.categories.sort((a, b) => a.order - b.order)))
+            .then(data => setState(prevState => ({
+                ...prevState,
+                categories: data.categories.sort((a, b) => a.order - b.order)
+            })))
             .catch(error => console.error('Error fetching categories:', error));
     }, []);
 
     // Modalı açmak için state'i true olarak ayarlar.
     const handleAddCategory = () => {
-        setEditingCategory(null);
-        setAddNewCategoryNameModal(true);
+        setState(prevState => ({
+            ...prevState,
+            editingCategory: null,
+            addNewCategoryNameModal: true
+        }));
     }
 
     // Alanların boş olup olmadığını ve aynı olup olmadığını kontrol edip yeni bir kategori oluşturur ve listeye sırası ile ekler
@@ -53,7 +63,6 @@ const CategoryEdit = () => {
                 };
 
                 if (editingCategory) {
-                    // Update existing category
                     fetch(`http://localhost:3030/categories/${editingCategory.id}`, {
                         method: 'PUT',
                         headers: {
@@ -66,14 +75,16 @@ const CategoryEdit = () => {
                             const updatedCategories = categories.map(category =>
                                 category.id === editingCategory.id ? updatedCategory : category
                             ).sort((a, b) => a.order - b.order);
-                            setCategories(updatedCategories);
+                            setState(prevState => ({
+                                ...prevState,
+                                categories: updatedCategories
+                            }));
                             handleCloseModal();
                         })
                         .catch((error) => {
                             console.error('Error updating category:', error);
                         });
                 } else {
-                    // Add new category
                     fetch('http://localhost:3030/categories', {
                         method: 'POST',
                         headers: {
@@ -84,7 +95,10 @@ const CategoryEdit = () => {
                         .then(response => response.json())
                         .then(data => {
                             const updatedCategories = [...categories, data].sort((a, b) => a.order - b.order);
-                            setCategories(updatedCategories);
+                            setState(prevState => ({
+                                ...prevState,
+                                categories: updatedCategories
+                            }));
                             handleCloseModal();
                         })
                         .catch((error) => {
@@ -99,16 +113,22 @@ const CategoryEdit = () => {
 
     // Modalı kapatır, inputları temizler
     const handleCloseModal = () => {
-        setAddNewCategoryNameModal(false);
-        setDeleteWarning(false);
-        setNewCategoryName('');
-        setNewCategoryOrder('');
+        setState(prevState => ({
+            ...prevState,
+            addNewCategoryNameModal: false,
+            deleteWarning: false,
+            newCategoryName: '',
+            newCategoryOrder: ''
+        }));
     };
 
     // Silinecek öğenin ID'sini belirler, silme uyarısını gösterir
     const handleDeleteWarning = (categoryId) => {
-        setCategoryToDelete(categoryId);
-        setDeleteWarning(true);
+        setState(prevState => ({
+            ...prevState,
+            categoryToDelete: categoryId,
+            deleteWarning: true
+        }));
     }
 
     // Eğer kategori ID'si null değilse, HTTP delete isteği gönderir, listeden çıkarılır, uyarı kapatılır
@@ -118,9 +138,12 @@ const CategoryEdit = () => {
                 method: 'DELETE'
             })
                 .then(() => {
-                    setCategories(categories.filter(category => category.id !== categoryToDelete));
-                    setCategoryToDelete(null);
-                    setDeleteWarning(false);
+                    setState(prevState => ({
+                        ...prevState,
+                        categories: categories.filter(category => category.id !== categoryToDelete),
+                        categoryToDelete: null,
+                        deleteWarning: false
+                    }));
                 })
                 .catch((error) => {
                     console.error('Error deleting category:', error);
@@ -133,18 +156,22 @@ const CategoryEdit = () => {
         navigate('/product-edit');
     }
 
+    // İlgili modalı açar, state'leri günceller
     const handleEditCategory = (category) => {
-        setEditingCategory(category);
-        setNewCategoryName(category.name);
-        setNewCategoryOrder(category.order);
-        setAddNewCategoryNameModal(true);
+        setState(prevState => ({
+            ...prevState,
+            editingCategory: category,
+            newCategoryName: category.name,
+            newCategoryOrder: category.order,
+            addNewCategoryNameModal: true
+        }));
     }
 
     return (
         <div className='category-edit'>
             <p className='category-edit-title'>Kategori Düzenleme</p>
             <div className='category-edit-add-category'>
-                <AddButton icon={faFolderPlus} onClick={() => handleAddCategory()}>Kategori Ekle</AddButton>
+                <AddButton icon={faFolderPlus} onClick={handleAddCategory}>Kategori Ekle</AddButton>
             </div>
             <div className='category-edit-list'>
                 <ul>
@@ -177,7 +204,7 @@ const CategoryEdit = () => {
                             className='modal-input'
                             placeholder='Kategori Adı'
                             value={newCategoryName}
-                            onChange={(e) => setNewCategoryName(e.target.value)}
+                            onChange={(e) => setState(prevState => ({ ...prevState, newCategoryName: e.target.value }))}
                         />
                     </div>
                     <div className="modal-category-name">
@@ -188,7 +215,7 @@ const CategoryEdit = () => {
                             className='modal-input'
                             placeholder='Kategori Sırası'
                             value={newCategoryOrder}
-                            onChange={(e) => setNewCategoryOrder(e.target.value)}
+                            onChange={(e) => setState(prevState => ({ ...prevState, newCategoryOrder: e.target.value }))}
                         />
                     </div>
                 </div>
