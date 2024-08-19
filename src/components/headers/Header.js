@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { NavbarContext } from './NavbarContext';
+import { NavbarContext } from '../../contexts/NavbarContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBasketShopping, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 

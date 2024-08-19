@@ -168,50 +168,6 @@ $admin-blue: #56aaff;
                         margin-right: .5rem;
                     }
                 }
-
-                .button {
-                    .btn-edit {
-                        padding: .5rem;
-                        margin-right: .5rem;
-                        color: #fff;
-                        background-color: $admin-green;
-                        border: none;
-                        border-radius: .5rem;
-                        font-weight: 600;
-
-                        .icon-product-edit {
-                            margin-right: .5rem;
-                        }
-                    }
-
-                    .btn-eye {
-                        padding: .5rem;
-                        margin-right: .5rem;
-                        color: #fff;
-                        border: none;
-                        border-radius: .5rem;
-                        font-weight: 600;
-                        background-color: $admin-blue;
-
-                        .icon-product-edit {
-                            margin-right: .5rem;
-                        }
-                    }
-
-                    .btn-delete {
-                        padding: .5rem 1.5rem;
-                        color: #fff;
-                        background-color: $admin-red;
-                        border: none;
-                        border-radius: .5rem;
-                        font-weight: 600;
-
-
-                        .icon-category-delete {
-                            margin-right: .5rem;
-                        }
-                    }
-                }
             }
         }
     }
@@ -387,50 +343,6 @@ $admin-blue: #56aaff;
                         margin-right: .5rem;
                     }
                 }
-
-                .button {
-                    .btn-edit {
-                        padding: .5rem;
-                        margin-right: .5rem;
-                        color: #fff;
-                        background-color: $admin-green;
-                        border: none;
-                        border-radius: .5rem;
-                        font-weight: 600;
-
-                        .icon-product-edit {
-                            margin-right: .5rem;
-                        }
-                    }
-
-                    .btn-eye {
-                        padding: .5rem;
-                        margin-right: .5rem;
-                        color: #fff;
-                        border: none;
-                        border-radius: .5rem;
-                        font-weight: 600;
-                        background-color: $admin-blue;
-
-                        .icon-product-edit {
-                            margin-right: .5rem;
-                        }
-                    }
-
-                    .btn-delete {
-                        padding: .5rem 1.5rem;
-                        color: #fff;
-                        background-color: $admin-red;
-                        border: none;
-                        border-radius: .5rem;
-                        font-weight: 600;
-
-
-                        .icon-category-delete {
-                            margin-right: .5rem;
-                        }
-                    }
-                }
             }
         }
     }
@@ -547,7 +459,6 @@ $admin-blue: #56aaff;
             }
         }
     }
-
 }
 
 
@@ -557,12 +468,115 @@ $admin-blue: #56aaff;
 
 
 
+// Admin Components Buttons
+.btn {
+    color: #fff;
+    border: none;
+    border-radius: .5rem;
+    padding: .5rem;
+    font-weight: 600;
+
+    .icon {
+        margin-right: .5rem;
+    }
+}
+
+.add-btn {
+    background-color: $admin-orange;
+    margin-right: .5rem;
+}
+
+.delete-btn {
+    background-color: $admin-red;
+    padding: .5rem 1.5rem;
+}
+
+.edit-btn {
+    background-color: $admin-green;
+    margin-right: .5rem;
+}
+
+.inner-btn,
+.close-btn {
+    background-color: $admin-blue;
+    margin-right: .5rem;
+
+}
 
 
 
 
 
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 999;
 
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border-radius: .5rem;
+        z-index: 1000;
+        background: #fff;
+        width: 35%;
+    }
+
+    .modal-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $admin-orange;
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+        padding: .3rem 1rem;
+
+        .modal-title-icon {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            margin-right: .5rem;
+            font-weight: 600;
+        }
+
+        .modal-close-button {
+            background-color: $admin-orange;
+            border: none;
+            color: #fff;
+        }
+    }
+
+    .modal-content {
+        margin: 1rem;
+
+        .delete-modal-p {
+            margin-bottom: 1rem;
+        }
+
+        .modal-inputs {
+            margin-bottom: 1rem;
+
+            .modal-category-name {
+                display: flex;
+                flex-direction: column;
+                gap: .5rem;
+                margin-bottom: 1rem;
+            }
+
+            .modal-input {
+                height: 2rem;
+                padding: 1rem .5rem;
+                outline: none;
+            }
+        }
+    }
+}
 
 
 
@@ -667,8 +681,6 @@ header {
         }
     }
 }
-
-
 
 .categories-edit ul {
     display: flex;

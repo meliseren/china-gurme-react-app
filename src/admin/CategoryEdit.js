@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose, faEdit, faEye, faFolderPlus, faSave, faTrash, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faFolderPlus, faSave, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
+import Modal from './components/modals/Modal';
+
+// Buyyons Component Import
+import AddButton from './components/buttons/AddButton';
+import DeleteButton from './components/buttons/DeleteButton';
+import EditButton from './components/buttons/EditButton';
+import InnerButton from './components/buttons/InnerButton';
+import CloseButton from './components/buttons/CloseButton';
 
 const CategoryEdit = () => {
     const navigate = useNavigate();
@@ -136,112 +144,69 @@ const CategoryEdit = () => {
         <div className='category-edit'>
             <p className='category-edit-title'>Kategori Düzenleme</p>
             <div className='category-edit-add-category'>
-                <button onClick={() => handleAddCategory()} className='btn-add-category'>
-                    <FontAwesomeIcon icon={faFolderPlus} className='icon-folder-plus' />
-                    Kategori Ekle
-                </button>
+                <AddButton icon={faFolderPlus} onClick={() => handleAddCategory()}>Kategori Ekle</AddButton>
             </div>
             <div className='category-edit-list'>
                 <ul>
                     {categories.map((category) => (
                         <li key={category.id}>
                             <div className="category-order">
-
                                 <p className='category-order-p'>{category.order}.</p>
                                 <p>{category.name}</p>
                             </div>
-
                             <div className="button">
-                                <button className='btn-edit' onClick={() => handleEditCategory(category)}>
-                                    <FontAwesomeIcon icon={faEdit} className='icon-product-edit' />
-                                    Düzenle
-                                </button>
-                                <button className='btn-eye' onClick={handleProductEdit}>
-                                    <FontAwesomeIcon icon={faEye} className='icon-product-edit' />
-                                    Ürünleri Gör
-                                </button>
-                                <button className='btn-delete' onClick={() => handleDeleteWarning(category.id)}>
-                                    <FontAwesomeIcon icon={faTrash} className='icon-category-delete' />
-                                    Sil
-                                </button>
+                                <EditButton onClick={() => handleEditCategory(category)}>Düzenle</EditButton>
+                                <InnerButton onClick={handleProductEdit}>Ürünleri Gör</InnerButton>
+                                <DeleteButton onClick={() => handleDeleteWarning(category.id)}>Sil</DeleteButton>
                             </div>
                         </li>
                     ))}
                 </ul>
             </div>
-            {addNewCategoryNameModal && (
-                <div className='category-edit-modal'>
-                    <div className="modal-overlay" onClick={handleCloseModal}></div>
-                    <div className='modal'>
-                        <div className="modal-title-container">
-                            <FontAwesomeIcon icon={faFolderPlus} className='icon-modal-folder-plus' />
-                            <p className='modal-title'>{editingCategory ? 'Kategori Güncelle' : 'Kategori Ekle'}</p>
-                        </div>
-                        <div className="modal-container">
-                            <div className="modal-category-name">
-                                <label>Kategori Adı :</label>
-                                <input
-                                    type='text'
-                                    className='modal-input'
-                                    placeholder='Kategori Adı'
-                                    value={newCategoryName}
-                                    onChange={(e) => setNewCategoryName(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className="modal-category-order">
-                                <label>Kategori Sırası :</label>
-                                <input
-                                    type='number'
-                                    min='1'
-                                    className='modal-input'
-                                    placeholder='Kategori Sırası'
-                                    value={newCategoryOrder}
-                                    onChange={(e) => setNewCategoryOrder(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className="modal-buttons">
-                                <button onClick={handleAddCategoryName} className='btn-save'>
-                                    <FontAwesomeIcon icon={faSave} className='icon-save' />
-                                    {editingCategory ? 'Güncelle' : 'Kaydet'}
-                                </button>
-                                <button onClick={handleCloseModal} className='btn-close'>
-                                    <FontAwesomeIcon icon={faClose} className='icon-close' />
-                                    Vazgeç
-                                </button>
-                            </div>
-                        </div>
+            <Modal
+                isOpen={addNewCategoryNameModal}
+                title={editingCategory ? 'Kategori Güncelle' : 'Kategori Ekle'}
+                icon={faFolderPlus}
+                onClose={handleCloseModal}
+            >
+                <div className="modal-inputs">
+                    <div className="modal-category-name">
+                        <label>Kategori Adı :</label>
+                        <input
+                            type='text'
+                            className='modal-input'
+                            placeholder='Kategori Adı'
+                            value={newCategoryName}
+                            onChange={(e) => setNewCategoryName(e.target.value)}
+                        />
+                    </div>
+                    <div className="modal-category-name">
+                        <label>Kategori Sırası :</label>
+                        <input
+                            type='number'
+                            min='1'
+                            className='modal-input'
+                            placeholder='Kategori Sırası'
+                            value={newCategoryOrder}
+                            onChange={(e) => setNewCategoryOrder(e.target.value)}
+                        />
                     </div>
                 </div>
-            )}
-            {deleteWarning && (
-                <div className="category-edit-modal">
-                    <div className="modal-overlay" onClick={handleCloseModal}></div>
-                    <div className='modal'>
-                        <div className="modal-title-container">
-                            <FontAwesomeIcon icon={faTriangleExclamation} className='icon-modal-folder-plus' />
-                            <p className='modal-title'>Uyarı</p>
-                        </div>
-                        <div className="modal-container">
-                            <p className='warning-info'>
-                                Eğer bu kategoriyi silerseniz, bu kategoriye ait ürünlerde silinecektir. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?
-                            </p>
-                            <div className="modal-buttons">
-                                <button onClick={handleDeleteCategory} className='btn-delete'>
-                                    <FontAwesomeIcon icon={faTrash} className='icon-delete' />
-                                    Sil
-                                </button>
-                                <button onClick={handleCloseModal} className='btn-close'>
-                                    <FontAwesomeIcon icon={faClose} className='icon-close' />
-                                    Vazgeç
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            )}
+                <AddButton icon={faSave} onClick={handleAddCategoryName}>{editingCategory ? 'Güncelle' : 'Kaydet'}</AddButton>
+                <CloseButton onClick={handleCloseModal}>Vazgeç</CloseButton>
+            </Modal>
+            <Modal
+                isOpen={deleteWarning}
+                title='Uyarı'
+                icon={faTriangleExclamation}
+                onClose={handleCloseModal}
+            >
+                <p className='delete-modal-p'>
+                    Eğer bu kategoriyi silerseniz, bu kategoriye ait ürünlerde silinecektir. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?
+                </p>
+                <CloseButton onClick={handleCloseModal}>Vazgeç</CloseButton>
+                <DeleteButton onClick={handleDeleteCategory}>Sil</DeleteButton>
+            </Modal>
         </div>
     );
 };

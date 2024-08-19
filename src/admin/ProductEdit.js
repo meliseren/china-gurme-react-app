@@ -31,7 +31,7 @@ const ProductEdit = () => {
                     <div className="modal">
                         <div className="modal-title-container">
                             <FontAwesomeIcon icon={faFolderPlus} className='icon-modal-folder-plus' />
-                            <p className='modal-title'>{editingCategory ? 'Kategori Güncelle' : 'Kategori Ekle'}</p>
+                            <p className='modal-title'>{editingCategory ? 'Ürün Güncelle' : 'Ürün Ekle'}</p>
                         </div>
                     </div>
                 </div>

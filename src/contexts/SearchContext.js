@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import productsData from './db/db.json';
+import productsData from '../views/db/db.json';
 
 export const SearchContext = createContext();
 

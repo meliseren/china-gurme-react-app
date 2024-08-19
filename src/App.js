@@ -4,23 +4,27 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Style
 import './App.scss';
 
-// Components
-import Topheader from './components/TopHeader';
-import Header from './components/Header';
-import Home from './view/Home';
-import About from './view/About';
-import Products from './view/Products';
-import Contact from './view/Contact';
-import ProductDetail from './view/ProductDetail';
-
-// Admin Components
+// Admin 
 import Login from './admin/Login';
-import CategoryEdit from './components/CategoryEdit';
-import { NavbarProvider } from './components/NavbarContext';
-import { SearchProvider } from './view/SearchContext';
+import CategoryEdit from './admin/CategoryEdit';
+import ProductEdit from './admin/ProductEdit';
+import ProductDetailEdit from './admin/ProductDetailEdit';
+
+// Views
+import Home from './views/Home';
+import About from './views/About';
+import Products from './views/Products';
+import Contact from './views/Contact';
+import ProductDetail from './views/ProductDetail';
+
+// Contexts
+import { SearchProvider } from './contexts/SearchContext';
+import { NavbarProvider } from './contexts/NavbarContext';
+
+// Components
+import Header from './components/headers/Header';
+import Topheader from './components/headers/TopHeader';
 import PrivateRoute from './components/PrivateRoute';
-import ProductEdit from './components/ProductEdit';
-import ProductDetailEdit from './components/ProductDetailEdit';
 
 function App() {
   // Sayfa kapandığında veya yenilendiğinde oturum bilgilerini siler
@@ -41,26 +45,8 @@ function App() {
       <SearchProvider>
         <NavbarProvider>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <Topheader />
-                  <Header />
-                  <Home />
-                </>
-              }
-            />
-            <Route
-              path="/about"
-              element={
-                <>
-                  <Topheader />
-                  <Header />
-                  <About />
-                </>
-              }
-            />
+            <Route path="/" element={<> <Topheader /> <Header /> <Home /> </>} />
+            <Route path="/about" element={<><Topheader /><Header /> <About /> </>} />
             <Route
               path="/products"
               element={
