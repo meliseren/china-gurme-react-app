@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderPlus, faSave, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 import Modal from './components/modals/Modal';
+import { useLocation } from 'react-router-dom';
 
 // Buttons Component Import
 import AddButton from './components/buttons/AddButton';
@@ -13,6 +13,9 @@ import CloseButton from './components/buttons/CloseButton';
 
 const CategoryEdit = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const categoryId = queryParams.get('categoryId');
     const [state, setState] = useState({
         categories: [],
         newCategoryName: '',
@@ -25,16 +28,16 @@ const CategoryEdit = () => {
 
     const { categories, newCategoryName, newCategoryOrder, addNewCategoryNameModal, deleteWarning, categoryToDelete, editingCategory } = state;
 
-    // Bileşen yüklendiğinde sunucudan ürün verilerini alır, kategorileri sıralar ve bunu state'e kaydeder
+    // Bileşen yüklendiğinde sunucudan kategori verilerini alır, sıralar ve bunu state'e kaydeder
     useEffect(() => {
-        fetch('http://localhost:3030/products')
+        fetch('http://localhost:3030/jsondata')
             .then(response => response.json())
             .then(data => setState(prevState => ({
                 ...prevState,
                 categories: data.categories.sort((a, b) => a.order - b.order)
             })))
             .catch(error => console.error('Error fetching categories:', error));
-    }, []);
+    }, [categoryId]);
 
     // Modalı açmak için state'i true olarak ayarlar.
     const handleAddCategory = () => {
@@ -45,17 +48,17 @@ const CategoryEdit = () => {
         }));
     }
 
-    // Alanların boş olup olmadığını ve aynı olup olmadığını kontrol edip yeni bir kategori oluşturur ve listeye sırası ile ekler
+    // Input alanların boş olup olmadığını ve aynı olup olmadığını kontrol edip yeni bir kategori oluşturur ve listeye sırası ile ekler
     const handleAddCategoryName = () => {
         if (newCategoryName.trim() !== '' && newCategoryOrder.toString().trim() !== '') {
-            const order = parseInt(newCategoryOrder, 10);
+            const order = newCategoryOrder
             const nameExists = categories.some(category => category.name === newCategoryName && category.id !== (editingCategory?.id || ''));
             const orderExists = categories.some(category => category.order === order && category.id !== (editingCategory?.id || ''));
 
             if (nameExists) {
-                alert('Bu kategori adı zaten mevcut, lütfen farklı bir ad girin.');
+                alert('Bu kategori adı zaten mevcut, lütfen farklı bir kategori adı girin.');
             } else if (orderExists) {
-                alert('Bu sıraya ait kategori mevcut, lütfen sırasını değiştirin.');
+                alert('Bu sıraya ait kategori mevcut, lütfen ürün sırasını değiştirin.');
             } else {
                 const categoryData = {
                     name: newCategoryName,
@@ -134,7 +137,7 @@ const CategoryEdit = () => {
     // Eğer kategori ID'si null değilse, HTTP delete isteği gönderir, listeden çıkarılır, uyarı kapatılır
     const handleDeleteCategory = () => {
         if (categoryToDelete !== null) {
-            fetch(`http://localhost:3030/products/${categoryToDelete}`, {
+            fetch(`http://localhost:3030/categories/${categoryToDelete}`, {
                 method: 'DELETE'
             })
                 .then(() => {
@@ -151,12 +154,12 @@ const CategoryEdit = () => {
         }
     }
 
-    // Ürünleri Gör butonundan sayfa yönlendirmesi yapar
-    const handleProductEdit = () => {
-        navigate('/product-edit');
+    // 'Ürünleri Gör' butonundan sayfa yönlendirmesi yapar
+    const handleProductNavigate = (categoryId) => {
+        navigate(`/product-edit?categoryId=${categoryId}`);
     }
 
-    // İlgili modalı açar, state'leri günceller
+    // İlgili modalı açar, kategori adını ve sırasını günceller
     const handleEditCategory = (category) => {
         setState(prevState => ({
             ...prevState,
@@ -183,7 +186,7 @@ const CategoryEdit = () => {
                             </div>
                             <div className="button">
                                 <EditButton onClick={() => handleEditCategory(category)}>Düzenle</EditButton>
-                                <InnerButton onClick={handleProductEdit}>Ürünleri Gör</InnerButton>
+                                <InnerButton onClick={() => handleProductNavigate(category.id)}>Ürünleri Gör</InnerButton>
                                 <DeleteButton onClick={() => handleDeleteWarning(category.id)}>Sil</DeleteButton>
                             </div>
                         </li>
@@ -215,7 +218,12 @@ const CategoryEdit = () => {
                             className='modal-input'
                             placeholder='Kategori Sırası'
                             value={newCategoryOrder}
-                            onChange={(e) => setState(prevState => ({ ...prevState, newCategoryOrder: e.target.value }))}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                if (/^\d*$/.test(value)) {
+                                    setState(prevState => ({ ...prevState, newCategoryOrder: value }));
+                                }
+                            }}
                         />
                     </div>
                 </div>
