@@ -23,7 +23,6 @@ import { NavbarProvider } from './contexts/NavbarContext';
 
 // Components
 import Header from './components/headers/Header';
-import Topheader from './components/headers/TopHeader';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -45,38 +44,11 @@ function App() {
       <SearchProvider>
         <NavbarProvider>
           <Routes>
-            <Route path="/" element={<> <Topheader /> <Header /> <Home /> </>} />
-            <Route path="/about" element={<><Topheader /><Header /> <About /> </>} />
-            <Route
-              path="/products"
-              element={
-                <>
-                  <Topheader />
-                  <Header />
-                  <Products />
-                </>
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <>
-                  <Topheader />
-                  <Header />
-                  <Contact />
-                </>
-              }
-            />
-            <Route
-              path="/products/:slug"
-              element={
-                <>
-                  <Topheader />
-                  <Header />
-                  <ProductDetail />
-                </>
-              }
-            />
+            <Route path="/" element={<> <Header /> <Home /> </>} />
+            <Route path="/about" element={<> <Header /> <About /> </>} />
+            <Route path="/products" element={<> <Header /><Products /></>} />
+            <Route path="/contact" element={<> <Header /> <Contact /></>} />
+            <Route path="/product-detail" element={<> <Header /> <ProductDetail /> </>}></Route>
             <Route path="/login" element={<Login />} />
             <Route
               path="/category-edit"
@@ -91,6 +63,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <ProductEdit />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/product-detail-edit"
+              element={
+                <PrivateRoute>
+                  <ProductDetailEdit />
                 </PrivateRoute>
               }
             />

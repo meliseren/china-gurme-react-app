@@ -15,6 +15,7 @@ const ProductEdit = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const categoryId = queryParams.get('categoryId');
+    const productId = queryParams.get('productId');
     const [state, setState] = useState({
         products: [],
         addNewProductNameModal: false,
@@ -23,10 +24,9 @@ const ProductEdit = () => {
         newProductOrder: '',
         deleteWarning: false,
         productToDelete: null,
-        categoryName: '',
     })
 
-    const { products, addNewProductNameModal, editingProduct, newProductName, newProductOrder, deleteWarning, productToDelete, categoryName } = state;
+    const { products, addNewProductNameModal, editingProduct, newProductName, newProductOrder, deleteWarning, productToDelete } = state;
 
     // Bileşen yüklendiğinde sunucudan ürün verilerini alır, sıralar ve state'e kaydeder
     useEffect(() => {
@@ -42,7 +42,7 @@ const ProductEdit = () => {
                 }));
             })
             .catch(error => console.error('Error fetching products:', error));
-    }, [categoryId]);
+    }, [categoryId, productId]);
 
     // Modal'ı açmak için state'i true olarak ayarlar
     const handleAddProduct = () => {
@@ -160,8 +160,8 @@ const ProductEdit = () => {
     }
 
     // 'Ürün Detayını Gör' butonundan sayfa yönlendirmesi yapar
-    const handleProductEditNavigate = () => {
-        navigate('/product-detail-edit');
+    const handleProductEditNavigate = (productId) => {
+        navigate(`/product-detail-edit?productId=${productId}`);
     }
 
     // İlgili modalı açar, kategori adını ve sırasını günceller
@@ -191,7 +191,7 @@ const ProductEdit = () => {
                             </div>
                             <div className="button">
                                 <EditButton onClick={() => handleEditProduct(product)}>Düzenle</EditButton>
-                                <InnerButton onClick={handleProductEditNavigate}>Ürün Detayını Gör</InnerButton>
+                                <InnerButton onClick={() => handleProductEditNavigate(product.id)}>Ürün Detayını Gör</InnerButton>
                                 <DeleteButton onClick={() => handleDeleteWarning(product.id)}>Sil</DeleteButton>
                             </div>
                         </li>

@@ -4,12 +4,18 @@
 }
 
 // Variables
+// Admin Color
 $admin-bg: #f4f6fa;
 $admin-orange: #ff7201;
 $admin-black: #222222;
 $admin-green: #8ac74a;
 $admin-red: #ff3300;
 $admin-blue: #56aaff;
+
+// Page
+$gray-color: #7e7e7e;
+$black-color: #253d4e;
+$green-color: #8ec138;
 
 * {
     font-family: 'Poppins', sans-serif;
@@ -461,13 +467,6 @@ $admin-blue: #56aaff;
     }
 }
 
-
-
-
-
-
-
-
 // Admin Components Buttons
 .btn {
     color: #fff;
@@ -503,10 +502,7 @@ $admin-blue: #56aaff;
 
 }
 
-
-
-
-
+// Admin Modals
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -583,10 +579,6 @@ $admin-blue: #56aaff;
 
 
 
-
-
-
-
 header {
 
     nav {
@@ -606,23 +598,6 @@ header {
                     text-decoration: none;
                 }
             }
-        }
-    }
-}
-
-// About
-.about {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    padding: 0rem 5rem;
-
-    .about-image {
-        img {
-            width: 30rem;
-            border-radius: .5rem;
-
         }
     }
 }
@@ -687,4 +662,151 @@ header {
     flex-direction: column;
     gap: 1rem;
     padding: 3rem 0;
+}
+
+
+
+
+
+// About
+.about {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 5rem;
+
+    .about-left {
+        width: 50%;
+
+        img {
+            border-radius: .5rem;
+        }
+    }
+
+    .about-right {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        width: 50%;
+
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+
+            p {
+                color: $gray-color;
+            }
+
+            .about-title {
+                font-weight: 600;
+                font-size: 1.3rem;
+                color: $black-color;
+            }
+        }
+
+        .about-tiny-image {
+            display: flex;
+            gap: .7rem;
+
+            img {
+                border-radius: .5rem;
+                width: 30%;
+            }
+        }
+
+    }
+
+
+}
+
+// Product
+.products {
+    display: flex;
+    gap: .5rem;
+    padding: 2rem 5rem;
+
+    .categories {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        border: 1px solid $gray-color;
+        padding: 1rem;
+        border-radius: .5rem;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
+        min-width: 14rem;
+
+        .title {
+            color: $black-color;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            li {}
+        }
+    }
+
+    .product-boxes {
+        ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+
+            li {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                background: #fff;
+                border: 1px solid $gray-color;
+                border-radius: .5rem;
+                padding: 1rem 0.5rem;
+                min-width: 150px;
+                min-height: 150px;
+                width: 250px;
+                height: 300px;
+                transform: 4s;
+
+                &:hover {
+                    border: 1px solid $green-color;
+                    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
+                    ;
+                }
+
+                img {
+                    width: 150px;
+                    height: 150px;
+                    object-fit: contain;
+                }
+
+                .price {
+                    display: flex;
+                    gap: .5rem;
+
+                    .old-price {
+                        text-decoration: line-through;
+                    }
+                }
+
+                .add-to-cart {
+                    background-color: $green-color;
+                    border: none;
+                    border-radius: .5rem;
+                    color: #fff;
+                    padding: .5rem;
+                    font-weight: 600;
+                }
+            }
+        }
+
+
+
+    }
 }

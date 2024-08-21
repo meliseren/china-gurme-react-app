@@ -1,103 +1,89 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import productsData from './db/db.json';
 
 const Products = () => {
+    const navigate = useNavigate();
+    const [state, setState] = useState({
+        categories: [],
+        products: [],
+        filteredProducts: []
+    });
 
-    const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    const { categories, products, filteredProducts } = state;
 
-    const convertToUrlSlug = (text) => {
-        // Türkçe karakterleri İngilizce karşılıklarına dönüştür
-        const mapping = {
-            'ş': 's',
-            'ı': 'i',
-            'ğ': 'g',
-            'ü': 'u',
-            'ö': 'o',
-            'ç': 'c',
-            'ğ': 'g',
-            'ş': 's',
-            'ı': 'i'
-        };
-
-        // Küçük harfe dönüştür ve Türkçe karakterleri değiştir
-        return text
-            .toLowerCase()
-            .replace(/[şğüöçı]/g, char => mapping[char] || char)
-            .replace(/\s+/g, '-')        // Boşlukları çizgi ile değiştir
-            .replace(/[^\w\-]+/g, '')    // Özel karakterleri temizle
-            .replace(/\-\-+/g, '-');     // Birden fazla çizgiyi tek çizgi ile değiştir
-    };
-
-
+    // Bileşen yüklendiğinde sunucudan kategori ve ürün verilerini alır
     useEffect(() => {
-        setProducts(productsData.products);
-        setCategories(productsData.categories);
-        setFilteredProducts(productsData.products);
+        const fetchCategoriesAndProducts = async () => {
+            try {
+                const response = await fetch('http://localhost:3030/jsondata');
+                const data = await response.json();
+                setState(prevState => ({
+                    ...prevState,
+                    categories: data.categories.sort((a, b) => a.order - b.order),
+                    products: data.products,
+                    filteredProducts: data.products // Başlangıçta tüm ürünleri göster
+                }));
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchCategoriesAndProducts();
     }, []);
 
-    //Kategori seçimi
+    // Kategoriye tıklama işlemi
     const handleCategoryClick = (categoryId) => {
-        setSelectedCategory(categoryId);
-
         if (categoryId === null) {
-            setFilteredProducts(products);
+            // Tüm ürünleri göster
+            setState(prevState => ({
+                ...prevState,
+                filteredProducts: prevState.products
+            }));
         } else {
-            const filtered = products.filter(product => product.category === categoryId);
-            setFilteredProducts(filtered);
+            // Seçilen kategoriye göre ürünleri filtrele
+            const filtered = products.filter(product => product.categoryId === categoryId);
+            setState(prevState => ({
+                ...prevState,
+                filteredProducts: filtered
+            }));
         }
+    };
+
+    const handleProductClick = (productId) => {
+        alert('tıklandı')
+        navigate(`/product-detail`)
     }
 
-
-
-
     return (
-        <div className='products'>
-            <div className='categories'>
+        <div className="products">
+            <div className="categories">
+                <p className='title'>Kategoriler</p>
                 <ul>
-                    <li onClick={() => handleCategoryClick(null)}></li>
+                    <li onClick={() => handleCategoryClick(null)}>
+                        <p>Tüm Ürünler</p>
+                    </li>
                     {categories.map((category) => (
                         <li key={category.id} onClick={() => handleCategoryClick(category.id)}>
-                            {category.name}
+                            <p>{category.name}</p>
                         </li>
                     ))}
                 </ul>
             </div>
-            <div className="product">
-
+            <div className="product-boxes">
                 <ul>
                     {filteredProducts.map((product) => (
-                        <li key={product.id}>
-
-                            <div className="product-box">
-                                <Link to={`/products/${convertToUrlSlug(product.name)}`}>
-                                    <img src={product.image} alt={product.name} />
-                                    <h3>{product.name}</h3>
-                                </Link>
-                                <p>Price: ${product.price}</p>
-                                <button>Sepete Ekle</button>
+                        <li key={product.id} onClick={(product) => handleProductClick(product)}>
+                            <img src={product.image1} alt='image-china' />
+                            <p>{product.name}</p>
+                            <div className="price">
+                                <p className='old-price'>{product.oldPrice}</p>
+                                <p>{product.newPrice}</p>
                             </div>
+                            <button className='add-to-cart'>Sepete Ekle</button>
                         </li>
-
                     ))}
                 </ul>
             </div>
-            {/* <div className="product">
-                {productItems.map((item, index) => (
-                    <div className="product-box">
-                        <div key={index}>
-                            <img src={item.image} alt={item.name} />
-                            <p>{item.name}</p>
-                            <p>{item.price} TL</p>
-                        </div>
-                        <button>Sepete ekle</button>
-                    </div>
-                ))}
-            </div> */}
         </div>
     );
 };

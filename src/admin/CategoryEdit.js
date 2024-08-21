@@ -30,13 +30,19 @@ const CategoryEdit = () => {
 
     // Bileşen yüklendiğinde sunucudan kategori verilerini alır, sıralar ve bunu state'e kaydeder
     useEffect(() => {
-        fetch('http://localhost:3030/jsondata')
-            .then(response => response.json())
-            .then(data => setState(prevState => ({
-                ...prevState,
-                categories: data.categories.sort((a, b) => a.order - b.order)
-            })))
-            .catch(error => console.error('Error fetching categories:', error));
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:3030/jsondata');
+                const data = await response.json();
+                setState(prevState => ({
+                    ...prevState,
+                    categories: data.categories.sort((a, b) => a.order - b.order)
+                }));
+            } catch (error) {
+                console.error('Error fetching categroies:', error)
+            }
+        };
+        fetchCategories();
     }, [categoryId]);
 
     // Modalı açmak için state'i true olarak ayarlar.

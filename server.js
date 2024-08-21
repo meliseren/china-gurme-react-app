@@ -83,7 +83,6 @@ app.delete('/categories/:id', (req, res) => {
     });
 });
 
-
 // PUT - Kategori Güncelleme
 app.put('/categories/:id', (req, res) => {
     const categoryId = req.params.id;
