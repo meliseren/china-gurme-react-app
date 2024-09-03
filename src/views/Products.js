@@ -1,3 +1,5 @@
+import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -57,14 +59,16 @@ const Products = () => {
     return (
         <div className="products">
             <div className="categories">
-                <p className='title'>Kategoriler</p>
+                <div className="categories-title">
+                    <p className='title'>Kategoriler</p>
+                </div>
                 <ul>
                     <li onClick={() => handleCategoryClick(null)}>
                         <p>Tüm Ürünler</p>
                     </li>
                     {categories.map((category) => (
                         <li key={category.id} onClick={() => handleCategoryClick(category.id)}>
-                            <p>{category.name}</p>
+                            <p tabIndex="0">{category.name}</p>
                         </li>
                     ))}
                 </ul>
@@ -73,13 +77,19 @@ const Products = () => {
                 <ul>
                     {filteredProducts.map((product) => (
                         <li key={product.id} onClick={(product) => handleProductClick(product)}>
-                            <img src={product.image1} alt='image-china' />
-                            <p>{product.name}</p>
-                            <div className="price">
-                                <p className='old-price'>{product.oldPrice}</p>
-                                <p>{product.newPrice}</p>
+                            <div className="product-img">
+                                <img src={product.image1} alt='image-china' />
                             </div>
-                            <button className='add-to-cart'>Sepete Ekle</button>
+                            <div className="flex-start">
+                                <p className='product-name-p'>{product.name}</p>
+                                <div className="price">
+                                    <p className='old-price'>{product.oldPrice} TL</p>
+                                    <p className='new-price'>{product.newPrice} TL</p>
+                                </div>
+                            </div>
+                            <div className="product-add-basket">
+                                <button className='add-to-cart'>{<FontAwesomeIcon icon={faShoppingBasket} />}Sepete Ekle</button>
+                            </div>
                         </li>
                     ))}
                 </ul>

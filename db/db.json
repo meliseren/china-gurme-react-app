@@ -235,6 +235,20 @@
             "image4": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
             "detail": "Lorem ipsum dolor sit amet.",
             "origin": "Çin"
+        },
+        {
+            "name": "Pixian Bean Paste (丹丹郫县豆瓣酱) Pixian Yağlı Acı Biber Sosu – 500G",
+            "order": "1",
+            "categoryId": "6a6848aa-1a55-49ec-a367-5bf8e42cbdbd",
+            "id": "5eae3142-5f5a-448f-b50c-bcc2e22d1091",
+            "oldPrice": 54.99,
+            "newPrice": 15.99,
+            "image1": "https://www.xushigida.com/cdn/shop/products/693334_00_1080x.png?v=1674231658",
+            "image2": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "image3": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "image4": "https://meihuamarket.com/image/cache/catalog/urunler/pirinc-makarnasi-mifen-rice-noodle-900x800.jpg",
+            "detail": "Lorem ipsum dolor sit amet.",
+            "origin": "Çin"
         }
     ]
 }
