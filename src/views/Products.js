@@ -3,18 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 const Products = () => {
     const navigate = useNavigate();
     const [state, setState] = useState({
         categories: [],
         products: [],
-        filteredProducts: []
+        filteredProducts: [],
+        selectedCategory: null,
+        currentPage: 1,
+        productsPerPage: 12 // Her sayfada gösterilecek ürün sayısı
     });
 
-    const { categories, products, filteredProducts } = state;
 
-    // Bileşen yüklendiğinde sunucudan kategori ve ürün verilerini alır
+    const { categories, products, filteredProducts, selectedCategory, currentPage, productsPerPage } = state;
+
+    // Bileşen yüklendiğinde kategori ve ürünleri çek
     useEffect(() => {
         const fetchCategoriesAndProducts = async () => {
             try {
@@ -33,28 +36,50 @@ const Products = () => {
         fetchCategoriesAndProducts();
     }, []);
 
-    // Kategoriye tıklama işlemi
+
+
+    const handleProductClick = (productId) => {
+        navigate(`/product-detail`);
+    }
+
+
+
+
+    // Sayfa numarası hesaplama
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+    // Geçerli sayfada gösterilecek ürünleri hesapla
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
     const handleCategoryClick = (categoryId) => {
         if (categoryId === null) {
-            // Tüm ürünleri göster
             setState(prevState => ({
                 ...prevState,
-                filteredProducts: prevState.products
+                filteredProducts: prevState.products,
+                selectedCategory: null,
+                currentPage: 1 // Kategori değiştiğinde 1. sayfaya dön
             }));
         } else {
-            // Seçilen kategoriye göre ürünleri filtrele
             const filtered = products.filter(product => product.categoryId === categoryId);
             setState(prevState => ({
                 ...prevState,
-                filteredProducts: filtered
+                filteredProducts: filtered,
+                selectedCategory: categoryId,
+                currentPage: 1 // Kategori değiştiğinde 1. sayfaya dön
             }));
         }
     };
 
-    const handleProductClick = (productId) => {
-        alert('tıklandı')
-        navigate(`/product-detail`)
-    }
+    // Sayfa değiştirme
+    const handlePageClick = (pageNum) => {
+        setState(prevState => ({
+            ...prevState,
+            currentPage: pageNum
+        }));
+        window.scrollTo(0, 0); // Sayfa değiştiğinde sayfanın başına git
+    };
 
     return (
         <div className="products">
@@ -64,10 +89,22 @@ const Products = () => {
                 </div>
                 <ul>
                     <li onClick={() => handleCategoryClick(null)}>
-                        <p>Tüm Ürünler</p>
+                        <input
+                            type="checkbox"
+                            checked={selectedCategory === null}
+                            onChange={() => handleCategoryClick(null)}
+                            className='checkbox'
+                        />
+                        <p tabIndex="0">Tüm Ürünler</p>
                     </li>
                     {categories.map((category) => (
                         <li key={category.id} onClick={() => handleCategoryClick(category.id)}>
+                            <input
+                                type="checkbox"
+                                checked={selectedCategory === category.id}
+                                onChange={() => handleCategoryClick(category.id)}
+                                className='checkbox'
+                            />
                             <p tabIndex="0">{category.name}</p>
                         </li>
                     ))}
@@ -75,15 +112,19 @@ const Products = () => {
             </div>
             <div className="product-boxes">
                 <ul>
-                    {filteredProducts.map((product) => (
-                        <li key={product.id} onClick={(product) => handleProductClick(product)}>
+                    {currentProducts.map((product) => (
+                        <li key={product.id} onClick={() => handleProductClick(product.id)}>
                             <div className="product-img">
                                 <img src={product.image1} alt='image-china' />
                             </div>
                             <div className="flex-start">
-                                <p className='product-name-p'>{product.name}</p>
+                                <div className="product-name-container">
+                                    <p className='product-name-p'>{product.name}</p>
+                                </div>
                                 <div className="price">
-                                    <p className='old-price'>{product.oldPrice} TL</p>
+                                    {product.oldPrice && (
+                                        <p className='old-price'>{product.oldPrice} TL</p>
+                                    )}
                                     <p className='new-price'>{product.newPrice} TL</p>
                                 </div>
                             </div>
@@ -93,6 +134,23 @@ const Products = () => {
                         </li>
                     ))}
                 </ul>
+                <div className="pagination">
+                    <button onClick={() => handlePageClick(currentPage - 1)} disabled={currentPage === 1}>
+                        &lt;
+                    </button>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index + 1}
+                            onClick={() => handlePageClick(index + 1)}
+                            className={currentPage === index + 1 ? 'active' : ''}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    <button onClick={() => handlePageClick(currentPage + 1)} disabled={currentPage === totalPages}>
+                        &gt;
+                    </button>
+                </div>
             </div>
         </div>
     );

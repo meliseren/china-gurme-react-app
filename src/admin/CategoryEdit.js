@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { faFolderPlus, faSave, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 import Modal from './components/modals/Modal';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 // Buttons Component Import
 import AddButton from './components/buttons/AddButton';
@@ -20,13 +21,14 @@ const CategoryEdit = () => {
         categories: [],
         newCategoryName: '',
         newCategoryOrder: '',
+        newCategoryImage: null, // Yeni eklenen state
         addNewCategoryNameModal: false,
         deleteWarning: false,
         categoryToDelete: null,
         editingCategory: null
     });
 
-    const { categories, newCategoryName, newCategoryOrder, addNewCategoryNameModal, deleteWarning, categoryToDelete, editingCategory } = state;
+    const { categories, newCategoryName, newCategoryOrder, newCategoryImage, addNewCategoryNameModal, deleteWarning, categoryToDelete, editingCategory } = state;
 
     // Bileşen yüklendiğinde sunucudan kategori verilerini alır, sıralar ve bunu state'e kaydeder
     useEffect(() => {
@@ -66,21 +68,28 @@ const CategoryEdit = () => {
             } else if (orderExists) {
                 alert('Bu sıraya ait kategori mevcut, lütfen ürün sırasını değiştirin.');
             } else {
-                const categoryData = {
-                    name: newCategoryName,
-                    order: order
-                };
+                const formData = new FormData();
+                formData.append('name', newCategoryName);
+                formData.append('order', order);
+                if (newCategoryImage) {
+                    formData.append('image', newCategoryImage);
+                }
 
+                console.log('FormData içeriği:');
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ', ' + pair[1]);
+                }
+
+                const baseUrl = 'http://localhost:3030/categories';
                 if (editingCategory) {
-                    fetch(`http://localhost:3030/categories/${editingCategory.id}`, {
-                        method: 'PUT',
+                    axios.put(`${baseUrl}/${editingCategory.id}`, formData, {
                         headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(categoryData),
+                            'Content-Type': 'multipart/form-data',
+                        }
                     })
-                        .then(response => response.json())
-                        .then(updatedCategory => {
+                        .then(response => {
+                            console.log('Başarılı yanıt:', response.data);
+                            const updatedCategory = response.data;
                             const updatedCategories = categories.map(category =>
                                 category.id === editingCategory.id ? updatedCategory : category
                             ).sort((a, b) => a.order - b.order);
@@ -90,19 +99,19 @@ const CategoryEdit = () => {
                             }));
                             handleCloseModal();
                         })
-                        .catch((error) => {
+                        .catch(error => {
+                            console.error('Hata detayları:', error.response ? error.response.data : error.message);
                             console.error('Error updating category:', error);
                         });
                 } else {
-                    fetch('http://localhost:3030/categories', {
-                        method: 'POST',
+                    axios.post(baseUrl, formData, {
                         headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(categoryData),
+                            'Content-Type': 'multipart/form-data',
+                        }
                     })
-                        .then(response => response.json())
-                        .then(data => {
+                        .then(response => {
+                            console.log('Başarılı yanıt:', response.data);
+                            const data = response.data;
                             const updatedCategories = [...categories, data].sort((a, b) => a.order - b.order);
                             setState(prevState => ({
                                 ...prevState,
@@ -110,8 +119,10 @@ const CategoryEdit = () => {
                             }));
                             handleCloseModal();
                         })
-                        .catch((error) => {
-                            console.error('Error adding category:', error);
+                        .catch(error => {
+                            console.error('Hata detayları:', error.response ? error.response.data : error.message);
+                            console.error('Tam hata objesi:', error);
+                            alert('Kategori eklenirken bir hata oluştu. Lütfen konsolu kontrol edin ve tekrar deneyin.');
                         });
                 }
             }
@@ -127,7 +138,8 @@ const CategoryEdit = () => {
             addNewCategoryNameModal: false,
             deleteWarning: false,
             newCategoryName: '',
-            newCategoryOrder: ''
+            newCategoryOrder: '',
+            newCategoryImage: null
         }));
     };
 
@@ -175,6 +187,16 @@ const CategoryEdit = () => {
             addNewCategoryNameModal: true
         }));
     }
+
+    const fileInputRef = useRef(null);
+
+    const [selectedFileName, setSelectedFileName] = useState('');
+
+    const handleFileInputChange = (e) => {
+        const fileName = e.target.files[0]?.name || '';
+        setSelectedFileName(fileName);
+        setState(prevState => ({ ...prevState, newCategoryImage: e.target.files[0] }));
+    };
 
     return (
         <div className='category-edit'>
@@ -231,6 +253,21 @@ const CategoryEdit = () => {
                                 }
                             }}
                         />
+                    </div>
+                    <div className="modal-category-image">
+                        <label>Kategori Fotoğrafı :</label>
+                        <div className="file-input-wrapper">
+                            <input
+                                type='file'
+                                className='file-input'
+                                accept="image/*"
+                                onChange={handleFileInputChange}
+                                ref={fileInputRef}
+                                id="fileInput"
+                            />
+                            <label htmlFor="fileInput" className="file-input-label">Dosya Seç</label>
+                            {selectedFileName && <span className="file-name">{selectedFileName}</span>}
+                        </div>
                     </div>
                 </div>
                 <AddButton icon={faSave} onClick={handleAddCategoryName}>{editingCategory ? 'Güncelle' : 'Kaydet'}</AddButton>

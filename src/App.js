@@ -18,6 +18,8 @@ import Contact from './views/Contact';
 import ProductDetail from './views/ProductDetail';
 import SignIn from './views/SignIn';
 import Order from './views/Order';
+import SignUp from './views/SignUp';
+import Account from './views/Account';
 
 // Contexts
 import { SearchProvider } from './contexts/SearchContext';
@@ -52,6 +54,8 @@ function App() {
             <Route path="/contact" element={<> <Header /> <Contact /></>} />
             <Route path="/product-detail" element={<> <Header /> <ProductDetail /> </>}></Route>
             <Route path="/sign-in" element={<> <Header /> <SignIn /> </>}></Route>
+            <Route path="/sign-up" element={<> <Header /> <SignUp /> </>}></Route>
+            <Route path="/account" element={<> <Header /> <Account /> </>}></Route>
             <Route path="/order" element={<> <Header /> <Order /> </>}></Route>
             {/* Admin */}
             <Route path="/login" element={<Login />} />

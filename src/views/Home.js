@@ -1,6 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -16,9 +14,8 @@ const Home = () => {
                 <p className='first-banner-title-1'>Lezzetin Uzak Doğu'daki Durağına Hoş Geldiniz!</p>
                 <p className='first-banner-title-2'>Hong Kong Restoran</p>
                 <div className="address">
-                    <FontAwesomeIcon icon={faLocationDot} className="banner-icon" />
                     <div className="address-text">
-                        <p className='first-banner-title-3'>Bağdat Cad. Caddebostan Mah.</p>
+                        <p className='first-banner-title-3'>Adres: Bağdat Cad. Caddebostan Mah.</p>
                         <p className='first-banner-title-3'>No: 258G Kadıköy/İstanbul</p>
                     </div>
                 </div>

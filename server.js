@@ -1,48 +1,127 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+const multer = require('multer');
+const path = require('path');
 const app = express();
 const PORT = 3030;
+const { v4: uuidv4 } = require('uuid');
 
-app.use(express.json());
+// Multer ayarları
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/') // Yüklenen dosyaların kaydedileceği klasör
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)) // Dosya adı oluşturma
+    }
+});
 
+const upload = multer({ storage: storage });
+
+// CORS ayarları
 app.use(cors({
     origin: 'http://localhost:3000',
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type'
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
+
+// Statik dosyaları sunmak için
+app.use('/uploads', express.static('uploads'));
+
+// Express'in JSON ve URL-encoded gövdesini ayrıştırmasını sağlayalım
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Root endpoint - Ana sayfa
 app.get('/', (req, res) => {
-    res.send('API is working. Go to /jsondata to see the product data.');
+    res.send('API is working. Go to /jsondata to see the product data and /customer to see the customer data.');
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
-
-// GET - Verileri Getirme
+// Endpoint for /jsondata - db.json
 app.get('/jsondata', (req, res) => {
     fs.readFile('db/db.json', (err, data) => {
-        if (err) throw err;
+        if (err) {
+            console.error('Error reading db.json:', err);
+            return res.status(500).json({ error: 'Error reading db.json' });
+        }
+        res.json(JSON.parse(data));
+    });
+});
+
+// Endpoint for /customer - customer.json
+app.get('/customer', (req, res) => {
+    fs.readFile('db/customer.json', (err, data) => {
+        if (err) {
+            console.error('Error reading customer.json:', err);
+            return res.status(500).json({ error: 'Error reading customer.json' });
+        }
+        res.json(JSON.parse(data));
+    });
+});
+
+// GET - Kategorileri Getirme
+app.get('/categories', (req, res) => {
+    fs.readFile('db/db.json', (err, data) => {
+        if (err) {
+            console.error('Error reading db.json:', err);
+            return res.status(500).json({ error: 'Error reading db.json' });
+        }
         const jsonData = JSON.parse(data);
-        res.json(jsonData);
+        res.json(jsonData.categories);
     });
 });
 
 // POST - Yeni Kategori Adı Ekleme
-app.post('/categories', (req, res) => {
-    fs.readFile('db/db.json', (err, data) => {
-        if (err) throw err;
-        const jsonData = JSON.parse(data);
-        const newCategory = req.body;
-        newCategory.id = uuidv4();
-        jsonData.categories.push(newCategory);
-        fs.writeFile('db/db.json', JSON.stringify(jsonData), err => {
-            if (err) throw err;
-            res.status(201).json(newCategory);
-        });
+app.post('/categories', upload.single('image'), (req, res) => {
+    console.log('İstek gövdesi:', req.body);
+    console.log('İstek dosyası:', req.file);
+    console.log('İstek başlıkları:', req.headers);
+
+    if (!req.body.name || !req.body.order) {
+        return res.status(400).json({ error: 'Kategori adı ve sırası gereklidir' });
+    }
+
+    fs.readFile('db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Dosya okuma hatası:', err);
+            return res.status(500).json({ error: 'Dosya okuma hatası' });
+        }
+        try {
+            let jsonData = JSON.parse(data);
+            console.log('Mevcut veri:', jsonData);
+
+            if (!jsonData.categories) {
+                console.log('Kategoriler dizisi bulunamadı, yeni bir dizi oluşturuluyor.');
+                jsonData.categories = [];
+            }
+
+            const newCategory = {
+                id: uuidv4(),
+                name: req.body.name,
+                order: parseInt(req.body.order, 10),
+                image: req.file ? `/uploads/${req.file.filename}` : null
+            };
+
+            console.log('Eklenecek yeni kategori:', newCategory);
+
+            jsonData.categories.push(newCategory);
+
+            console.log('Güncellenmiş veri:', jsonData);
+
+            fs.writeFile('db/db.json', JSON.stringify(jsonData, null, 2), 'utf8', err => {
+                if (err) {
+                    console.error('Dosya yazma hatası:', err);
+                    return res.status(500).json({ error: 'Dosya yazma hatası' });
+                }
+                console.log('Yeni kategori başarıyla eklendi:', newCategory);
+                res.status(201).json(newCategory);
+            });
+        } catch (error) {
+            console.error('İstek işleme hatası:', error);
+            res.status(500).json({ error: 'Sunucu içi hata', details: error.message });
+        }
     });
 });
 
@@ -84,25 +163,48 @@ app.delete('/categories/:id', (req, res) => {
 });
 
 // PUT - Kategori Güncelleme
-app.put('/categories/:id', (req, res) => {
+app.put('/categories/:id', upload.single('image'), (req, res) => {
     const categoryId = req.params.id;
     const updatedCategory = req.body;
 
-    fs.readFile('db/db.json', (err, data) => {
-        if (err) throw err;
-        const jsonData = JSON.parse(data);
-
-        // Kategori bulun ve güncelle
-        const categoryIndex = jsonData.categories.findIndex(cat => cat.id === categoryId);
-        if (categoryIndex === -1) {
-            return res.status(404).send('Category not found');
+    fs.readFile('db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Dosya okuma hatası:', err);
+            return res.status(500).json({ error: 'Dosya okuma hatası' });
         }
-        jsonData.categories[categoryIndex] = { ...jsonData.categories[categoryIndex], ...updatedCategory };
+        try {
+            let jsonData = JSON.parse(data);
 
-        fs.writeFile('db/db.json', JSON.stringify(jsonData), err => {
-            if (err) throw err;
-            res.json(jsonData.categories[categoryIndex]);
-        });
+            const categoryIndex = jsonData.categories.findIndex(cat => cat.id === categoryId);
+            if (categoryIndex === -1) {
+                return res.status(404).send('Kategori bulunamadı');
+            }
+
+            if (req.file) {
+                updatedCategory.image = `/uploads/${req.file.filename}`;
+            } else if (!updatedCategory.image) {
+                // Eğer yeni bir resim yüklenmediyse ve mevcut resim de yoksa, null olarak ayarla
+                updatedCategory.image = null;
+            }
+
+            jsonData.categories[categoryIndex] = {
+                ...jsonData.categories[categoryIndex],
+                ...updatedCategory,
+                order: parseInt(updatedCategory.order, 10)
+            };
+
+            fs.writeFile('db/db.json', JSON.stringify(jsonData, null, 2), 'utf8', err => {
+                if (err) {
+                    console.error('Dosya yazma hatası:', err);
+                    return res.status(500).json({ error: 'Dosya yazma hatası' });
+                }
+                console.log('Kategori başarıyla güncellendi:', jsonData.categories[categoryIndex]);
+                res.json(jsonData.categories[categoryIndex]);
+            });
+        } catch (error) {
+            console.error('İstek işleme hatası:', error);
+            res.status(500).json({ error: 'Sunucu içi hata', details: error.message });
+        }
     });
 });
 
@@ -151,4 +253,15 @@ app.delete('/products/:id', (req, res) => {
             res.status(204).send();
         });
     });
+});
+
+// Hata yakalama middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Bir şeyler yanlış gitti!');
+});
+
+// Sunucuyu başlat
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });
